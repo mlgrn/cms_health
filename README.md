@@ -1,0 +1,109 @@
+# Healthcare Transparency Data Tool
+
+This tool helps consumers compare healthcare plans based on both premium costs and quality metrics such as claim denial rates. It uses public CMS (Centers for Medicare & Medicaid Services) data to provide insights that aren't typically available through standard marketplace comparisons.
+
+## Features
+
+- Retrieves plan data by state and age
+- Calculates and displays key quality metrics:
+  - Claim denial rates
+  - Claim resubmission rates
+  - Out-of-network claims percentages
+- Shows monthly premium costs for each plan
+- Ranks plans based on both cost and quality metrics
+- Smart plan ID matching to maximize premium data availability
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.6 or higher
+- PostgreSQL database with CMS data (tables listed below)
+- Required Python packages (see requirements.txt)
+
+### Installation
+
+1. Clone this repository
+```bash
+git clone [repository-url]
+cd cms_health
+```
+
+2. Install required packages
+```bash
+pip install -r requirements.txt
+```
+
+3. Create a `.env` file in the project root with your database connection string:
+```
+DATABASE_URL=postgresql://username:password@localhost:5432/database_name
+```
+
+### Database Setup
+
+This application requires a PostgreSQL database with the following CMS data tables:
+- `plan_attributes_puf` - Plan attribute data
+- `rate_puf` - Premium rate data by age and location
+- `transparency_in_coverage_puf_indqhp` - Individual QHP transparency data
+- `transparency_2025_ind_sadp` - Individual SADP transparency data
+- `transparency_2025_shop` - SHOP transparency data
+
+The data can be obtained from the CMS website and imported into your PostgreSQL database.
+
+## Usage
+
+### Starting the API
+
+First, start the FastAPI backend:
+
+```bash
+cd api
+uvicorn main:app --reload
+```
+
+The API should be running at http://localhost:8000.
+
+### Running the Client
+
+From another terminal, run the client script:
+
+```bash
+cd scripts
+python be_transparent.py
+```
+
+Follow the prompts to:
+1. Enter your age
+2. Enter your state's two-letter code
+3. View and compare healthcare plans
+
+## How It Works
+
+1. The client collects your age and state information
+2. It queries the API for:
+   - Available insurance issuers in your state
+   - Premium rates for your age and state
+   - Transparency data for each issuer
+3. For each plan, it calculates quality metrics from transparency data
+4. If premium data isn't immediately available for some plans, it makes targeted API calls to find matching premium data
+5. Finally, it displays:
+   - All available plans with their metrics
+   - Plans ranked by denial rate (lowest to highest)
+   - Plans ranked by value (premium cost divided by approval probability)
+
+## API Endpoints
+
+- `/` - API status check
+- `/plans/{state_code}` - Get plans for a specific state
+- `/rates/{state_code}/{age}` - Get premium rates by state and age
+- `/issuers/{state_code}` - Get issuer IDs for a specific state
+- `/transparency/{issuer_id}` - Get transparency data for a specific issuer
+- `/all-transparency/{issuer_id}` - Get transparency data from all tables for an issuer
+- `/rate-by-plan/{plan_id}/{age}` - Get premium rates for a specific plan ID and age
+
+## Notes for Reviewers
+
+- The tool uses progressive fallback logic for plan ID matching since plan IDs can vary between transparency and rate data tables
+- The API includes robust error handling and diagnostics to help troubleshoot any issues
+- For states or plans with limited data, the tool will display what's available with appropriate notices
+- The tool currently supports data for 31 states (see the prompt when running the client) 
