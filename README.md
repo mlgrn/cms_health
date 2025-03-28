@@ -18,7 +18,7 @@ This tool helps consumers compare healthcare plans based on both premium costs a
 ### Prerequisites
 
 - Python 3.6 or higher
-- PostgreSQL database with CMS data (tables listed below)
+- PostgreSQL database with CMS data (i have temporarily hosted this on Railway for ease of use)
 - Required Python packages (see requirements.txt)
 
 ### Installation
@@ -34,21 +34,13 @@ cd cms_health
 pip install -r requirements.txt
 ```
 
-3. Create a `.env` file in the project root with your database connection string:
+3. Create a `.env` file in the project root with the database connection string:
+
+example
 ```
 DATABASE_URL=postgresql://username:password@localhost:5432/database_name
 ```
 
-### Database Setup
-
-This application requires a PostgreSQL database with the following CMS data tables:
-- `plan_attributes_puf` - Plan attribute data
-- `rate_puf` - Premium rate data by age and location
-- `transparency_in_coverage_puf_indqhp` - Individual QHP transparency data
-- `transparency_2025_ind_sadp` - Individual SADP transparency data
-- `transparency_2025_shop` - SHOP transparency data
-
-The data can be obtained from the CMS website and imported into your PostgreSQL database.
 
 ## Usage
 
