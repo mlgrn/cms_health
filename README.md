@@ -2,6 +2,10 @@
 
 This tool helps consumers compare healthcare plans based on both premium costs and quality metrics such as claim denial rates. It uses public CMS (Centers for Medicare & Medicaid Services) data to provide insights that aren't typically available through standard marketplace comparisons.
 
+For example, if a healthcare plan is fairly inexpensive in terms of the premium, but the denial rate or resubmission rate is historically high that plan may lead to a lot of frustration, wasted time spent of paperwork or having to pay more than expected out of pocket. Customers should be able to see this public data to make a more informed decision. 
+
+
+
 ## Features
 
 - Retrieves plan data by state and age
@@ -18,14 +22,14 @@ This tool helps consumers compare healthcare plans based on both premium costs a
 ### Prerequisites
 
 - Python 3.6 or higher
-- PostgreSQL database with CMS data (i have temporarily hosted this on Railway for ease of use)
+- PostgreSQL database with CMS data. I have temporarily hosted a database on Railway for convenience as 3-28-25 and will provide access for evaluation purposes. 
 - Required Python packages (see requirements.txt)
 
 ### Installation
 
 1. Clone this repository
-```bash
-git clone [repository-url]
+```bashgits
+git clone https://github.com/mlgrn/cms_health
 cd cms_health
 ```
 
