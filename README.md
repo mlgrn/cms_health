@@ -21,7 +21,7 @@ For example, if a healthcare plan is fairly inexpensive in terms of the premium,
 
 ### Prerequisites
 
-- Python 3.6 or higher
+- tested on Python 3.11.4
 - PostgreSQL database with CMS data. I have temporarily hosted a database on Railway for convenience as 3-28-25 and will provide access for evaluation purposes. 
 - Required Python packages (see requirements.txt)
 
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 example
 ```
-DATABASE_URL=postgresql://username:password@localhost:5432/database_name
+DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
 ```
 
 
